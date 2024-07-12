@@ -15,8 +15,7 @@ def load_vi(product_id):
 ghana_aoi = ee.FeatureCollection("projects/ee-princenedjoh5/assets/ghana_Ghana_Country_Boundary")
 
 forest_cover = ee.Image("UMD/hansen/global_forest_change_2023_v1_11").clip(ghana_aoi)
-treeCover = forest_cover.select('treecover2000')
-print('forest cover:\n', forest_cover.bandNames().getInfo())
+treeCover = forest_cover.select(['treecover2000'])
 
 # Using CHIRPS data
 precipitation = ee.ImageCollection('UCSB-CHG/CHIRPS/DAILY').filter(ee.Filter.date('2018-05-01', '2018-05-03')).filterBounds(ghana_aoi).select('precipitation');
@@ -39,6 +38,7 @@ protectedAreas = ee.FeatureCollection('WCMC/WDPA/current/points').style({
 
 #combined Image
 feature_image = ee.Image.cat(forest_cover, slope, aspect)
+print('forest cover:', feature_image.bandNames().getInfo())
 
 # Define the class band (e.g., transition)
 class_band = 'lossyear'
