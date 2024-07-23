@@ -5,7 +5,6 @@ import pickle
 from sklearn import metrics
 from sklearn.ensemble import RandomForestClassifier
 
-
 data = pd.read_csv("dataset.csv")
 
 data = np.array(data)
